@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AFNetworking.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>JSONKit-NoWarning.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>KRVideoPlayer-KRVideoPlayer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,7 +52,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>098DE6DB5DEE2EF43C8274CB8F425E28</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>13499D3F25AB4777F436DC0E70AE3F95</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1901DC0EFFEBB1D2E81E82628A7DA5DF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4FA0F7434234D92D9B2A5C52D72BB86C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,17 +87,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BABB59A08E3245F5E79D0ACA2568A250</key>
+		<key>AFF0DD94AEF36704ECD7043DCFBCBD25</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D18DBAD707910F82F0EE15690883F77F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EE69D4CE7CA7BC6DBB8EE56BEF41443A</key>
+		<key>E2DCC34EE0917BD0A455B202018FFAD3</key>
 		<dict>
 			<key>primary</key>
 			<true/>

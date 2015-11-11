@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8678C4901E4E5A5FC2114F19"
+               BlueprintIdentifier = "D105C71F46650A6ADDC42FDF"
                BuildableName = "libUIView+TKGeometry.a"
                BlueprintName = "UIView+TKGeometry"
                ReferencedContainer = "container:Pods.xcodeproj">

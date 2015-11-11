@@ -8,3 +8,5 @@ pod 'UIView+TKGeometry', '~> 0.2'
 pod 'StandardPaths', '~> 1.6.4'
 #pod 'kxmovie', '0.0.1'
 #pod 'ALMoviePlayerController', '~>0.3.0' 
+pod "AFNetworking", "~> 2.0"
+pod 'JSONKit-NoWarning', '~> 1.2'

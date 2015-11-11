@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "77F535C5348E0A9F311E24C6"
+               BlueprintIdentifier = "C142F37A7B7A3AC227697636"
                BuildableName = "libTSMiniWebBrowser.a"
                BlueprintName = "TSMiniWebBrowser"
                ReferencedContainer = "container:Pods.xcodeproj">
