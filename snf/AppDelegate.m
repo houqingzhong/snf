@@ -20,6 +20,39 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    self.localStore = [[YTKKeyValueStore alloc] initDBWithName:@"local-key-value"];
+    NSString *tableName = server_data_cahce;
+    [_localStore createTableWithName:tableName];
+    
+    tableName = setting_data_cache;
+    [_localStore createTableWithName:tableName];
+    
+    self.reachability = [GCNetworkReachability reachabilityForInternetConnection];
+    [self.reachability startMonitoringNetworkReachabilityWithHandler:^(GCNetworkReachabilityStatus status) {
+        switch (status) {
+            case GCNetworkReachabilityStatusWWAN:
+                NSLog(@"-------GCNetworkReachabilityStatusWWAN------");
+                [[DownloadClient sharedInstance] startDownload];
+                break;
+                
+            case GCNetworkReachabilityStatusWiFi:
+                NSLog(@"-------GCNetworkReachabilityStatusWiFi------");
+                [[DownloadClient sharedInstance] startDownload];
+                break;
+            case GCNetworkReachabilityStatusNotReachable:
+                NSLog(@"-------GCNetworkReachabilityStatusNotReachable------");
+                [[DownloadClient sharedInstance] stopDownload:^(BOOL finshed) {
+                    
+                }];
+                
+                break;
+            default:
+                break;
+        }
+    }];
+    
+
+
     [self setWindow:[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]];
     [[self window] setTintColor:[UIColor purpleColor]];
     

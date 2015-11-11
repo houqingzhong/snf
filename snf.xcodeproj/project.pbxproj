@@ -23,6 +23,9 @@
 		1DCEAFEF1BF31800002804B1 /* WTALeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCEAFEB1BF31800002804B1 /* WTALeftViewController.m */; };
 		1DCEAFF01BF31800002804B1 /* WTALeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCEAFEC1BF31800002804B1 /* WTALeftViewController.xib */; };
 		93A2FBCDA905BBEE83834DBF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 616F9AED7F3AB8691145F8C8 /* libPods.a */; };
+		FF3AD21E1BF39C000092D817 /* DownloadClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3AD21D1BF39C000092D817 /* DownloadClient.m */; };
+		FF3AD2211BF39C8F0092D817 /* PublicMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3AD2201BF39C8F0092D817 /* PublicMethod.m */; };
+		FFCDD1CE1BF39E270043A523 /* NSObject+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCDD1CD1BF39E270043A523 /* NSObject+Extend.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +58,12 @@
 		616F9AED7F3AB8691145F8C8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F91A4271A6872BF0C0C5E9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FBD06019133F495FE8A456BE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		FF3AD21C1BF39C000092D817 /* DownloadClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadClient.h; sourceTree = "<group>"; };
+		FF3AD21D1BF39C000092D817 /* DownloadClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadClient.m; sourceTree = "<group>"; };
+		FF3AD21F1BF39C8F0092D817 /* PublicMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicMethod.h; sourceTree = "<group>"; };
+		FF3AD2201BF39C8F0092D817 /* PublicMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicMethod.m; sourceTree = "<group>"; };
+		FFCDD1CC1BF39E270043A523 /* NSObject+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extend.h"; sourceTree = "<group>"; };
+		FFCDD1CD1BF39E270043A523 /* NSObject+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extend.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +105,12 @@
 				1D76B16C1BEAFE2E0054DDC9 /* AppDelegate.m */,
 				1D76B16E1BEAFE2E0054DDC9 /* ViewController.h */,
 				1D76B16F1BEAFE2E0054DDC9 /* ViewController.m */,
+				FF3AD21C1BF39C000092D817 /* DownloadClient.h */,
+				FF3AD21D1BF39C000092D817 /* DownloadClient.m */,
+				FFCDD1CC1BF39E270043A523 /* NSObject+Extend.h */,
+				FFCDD1CD1BF39E270043A523 /* NSObject+Extend.m */,
+				FF3AD21F1BF39C8F0092D817 /* PublicMethod.h */,
+				FF3AD2201BF39C8F0092D817 /* PublicMethod.m */,
 				1D76B1711BEAFE2E0054DDC9 /* Main.storyboard */,
 				1D76B1741BEAFE2E0054DDC9 /* Assets.xcassets */,
 				1D76B1761BEAFE2E0054DDC9 /* LaunchScreen.storyboard */,
@@ -162,6 +177,7 @@
 				1D76B1621BEAFE2E0054DDC9 /* Frameworks */,
 				1D76B1631BEAFE2E0054DDC9 /* Resources */,
 				DF60655DD95D48AA4337BE52 /* Copy Pods Resources */,
+				3F97A6CF5B3F24FA707C6A08 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -223,6 +239,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3F97A6CF5B3F24FA707C6A08 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4B966A08A16D4F85DC247F8A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -262,11 +293,14 @@
 			files = (
 				1D76B1701BEAFE2E0054DDC9 /* ViewController.m in Sources */,
 				1D76B16D1BEAFE2E0054DDC9 /* AppDelegate.m in Sources */,
+				FF3AD21E1BF39C000092D817 /* DownloadClient.m in Sources */,
 				1DAAAEBE1BF36A4F007475C4 /* SNFBaseViewcontroller.m in Sources */,
 				1DAAAEB91BF36130007475C4 /* SNFViewcontroller.m in Sources */,
+				FFCDD1CE1BF39E270043A523 /* NSObject+Extend.m in Sources */,
 				1D76B16A1BEAFE2E0054DDC9 /* main.m in Sources */,
 				1DCEAFEF1BF31800002804B1 /* WTALeftViewController.m in Sources */,
 				1DCEAFED1BF31800002804B1 /* WTAContentViewController.m in Sources */,
+				FF3AD2211BF39C8F0092D817 /* PublicMethod.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

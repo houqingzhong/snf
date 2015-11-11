@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class YTKKeyValueStore;
+@class GCNetworkReachability;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) YTKKeyValueStore  *localStore;
 
+@property (strong, nonatomic) GCNetworkReachability *reachability;
 
 @end
 

@@ -10,3 +10,7 @@ pod 'StandardPaths', '~> 1.6.4'
 #pod 'ALMoviePlayerController', '~>0.3.0' 
 pod "AFNetworking", "~> 2.0"
 pod 'JSONKit-NoWarning', '~> 1.2'
+pod 'YTKKeyValueStore', '~> 0.1.2'
+pod "TSMessages"
+pod 'SVPullToRefreshImprove', '~> 0.5'
+pod 'GCNetworkReachability', '~> 1.3.2'
