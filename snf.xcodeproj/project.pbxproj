@@ -27,6 +27,8 @@
 
 /* Begin PBXFileReference section */
 		1D16C9821BF373AE00DD4F5D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		1D16C9841BF3743500DD4F5D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		1D16C9851BF3743500DD4F5D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1D76B1651BEAFE2E0054DDC9 /* snf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = snf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D76B1691BEAFE2E0054DDC9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1D76B16B1BEAFE2E0054DDC9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				1D76B1721BEAFE2E0054DDC9 /* Base */,
+				1D16C9841BF3743500DD4F5D /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				1D76B1771BEAFE2E0054DDC9 /* Base */,
+				1D16C9851BF3743500DD4F5D /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
