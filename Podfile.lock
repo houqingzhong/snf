@@ -1,0 +1,22 @@
+PODS:
+  - KRVideoPlayer (1.0.1)
+  - StandardPaths (1.6.4)
+  - TSMiniWebBrowser (1.0.1)
+  - UIView+TKGeometry (0.2)
+  - WTAZoomNavigationController (1.0.7)
+
+DEPENDENCIES:
+  - KRVideoPlayer (~> 1.0.1)
+  - StandardPaths (~> 1.6.4)
+  - TSMiniWebBrowser (~> 1.0.1)
+  - UIView+TKGeometry (~> 0.2)
+  - WTAZoomNavigationController (~> 1.0.7)
+
+SPEC CHECKSUMS:
+  KRVideoPlayer: 08918da1b99cae35fd4c15b2ec2b49358d4c985f
+  StandardPaths: d5c7fadc9ea4327e460a19052d5a18cfbffa689d
+  TSMiniWebBrowser: ca9d2b548584d197d360d58696e22e811c9329f0
+  UIView+TKGeometry: bef0d7727753910d66d6fa51a3128ae6908047ef
+  WTAZoomNavigationController: 5caaec1d3c04cfeafb8ca8f01c7e1a9addb1797e
+
+COCOAPODS: 0.38.2
