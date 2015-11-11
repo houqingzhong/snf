@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D16C9831BF373AE00DD4F5D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D16C9821BF373AE00DD4F5D /* Localizable.strings */; };
 		1D76B16A1BEAFE2E0054DDC9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D76B1691BEAFE2E0054DDC9 /* main.m */; };
 		1D76B16D1BEAFE2E0054DDC9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D76B16C1BEAFE2E0054DDC9 /* AppDelegate.m */; };
 		1D76B1701BEAFE2E0054DDC9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D76B16F1BEAFE2E0054DDC9 /* ViewController.m */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D16C9821BF373AE00DD4F5D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		1D76B1651BEAFE2E0054DDC9 /* snf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = snf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D76B1691BEAFE2E0054DDC9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1D76B16B1BEAFE2E0054DDC9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 		1D76B1681BEAFE2E0054DDC9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1D16C9821BF373AE00DD4F5D /* Localizable.strings */,
 				1DAE90C31BF3581000682657 /* snf_jkfs.mp4 */,
 				1DAE90C01BF3454B00682657 /* 254236.json */,
 				1D76B1691BEAFE2E0054DDC9 /* main.m */,
@@ -209,6 +212,7 @@
 				1DAE90C41BF3581000682657 /* snf_jkfs.mp4 in Resources */,
 				1DAE90C11BF3454B00682657 /* 254236.json in Resources */,
 				1D76B1751BEAFE2E0054DDC9 /* Assets.xcassets in Resources */,
+				1D16C9831BF373AE00DD4F5D /* Localizable.strings in Resources */,
 				1D76B1731BEAFE2E0054DDC9 /* Main.storyboard in Resources */,
 				1DCEAFEE1BF31800002804B1 /* WTAContentViewController.xib in Resources */,
 			);

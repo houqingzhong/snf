@@ -1,0 +1,17 @@
+/* 
+  Localized.strings
+  YoukuUniversal
+
+  Created by Peter Lee on 3/11/13.
+  Copyright (c) 2013 Youku.com inc. All rights reserved.
+*/
+
+
+"Pull to refresh..." = "下拉可以刷新";
+"Release to refresh..." = "松开即可刷新";
+"Loading..." = "正在刷新…";
+
+"Continue pulling to refresh" = "继续划动便可刷新";
+"Release to refresh" = "松开即可刷新";
+"Loaded!" = "";
+"Done" = "完成";
