@@ -9,7 +9,7 @@
 #import "SNFViewcontroller.h"
 #import "SNFHeader.h"
 
-@interface SNFViewcontroller()<UITableViewDataSource, UITableViewDelegate, ALMoviePlayerControllerDelegate>
+@interface SNFViewcontroller()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic,strong) UITableView *tableview;
 @property (nonatomic, strong) NSArray *dataArray;
@@ -85,9 +85,4 @@
     return 60;
 }
 
-
-- (void)moviePlayerWillMoveFromWindow
-{
-    
-}
 @end
