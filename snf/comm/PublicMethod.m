@@ -192,10 +192,14 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval) {
 + (BOOL)play:(NSDictionary *)dict controller:(UIViewController *)targetController
 {
     NSString *fileUrl = [NSString stringWithFormat:@"%@/video/%@",  Host, dict[@"file_name"]];
-    NSURL *videoURL = [[DownloadClient sharedInstance] getDownloadFile:fileUrl];
-    if (videoURL) {
+    
+    NSURL *videoURL = [PublicMethod getDownloadFile:fileUrl];
+    
+    if (nil == videoURL) {
         
-        [PublicMethod download:dict];
+        NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
+        newDict[@"md5"] = [fileUrl tb_MD5String];
+        [PublicMethod download:newDict];
         return NO;
     }
     //    NSURL *videoURL = [[NSBundle mainBundle] URLForResource:@"512fa609eade4ccd35fc4df95d9629f0" withExtension:@"f4v"];
@@ -229,7 +233,49 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval) {
             [[DownloadClient sharedInstance] startDownload];
         });
     }];
-    
-
 }
+
++ (NSURL *)getDownloadFile:(NSString *)fileUrl
+{
+    NSString *docDir = [PublicMethod getDownloadPath];
+    
+    NSString *file = [NSString stringWithFormat:@"%@/%@.mp4", docDir, [fileUrl tb_MD5String]];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSURL *filePath = [NSURL URLWithString:file];
+    
+    if([fileManager fileExistsAtPath:filePath.absoluteString])
+    {
+        
+        return filePath;
+    }
+    else
+    {
+        return nil;
+    }
+    
+}
+
+//移动下载完成的文件到目标文件夹   app在下载过程中crash 重启时会走这个逻辑
++ (void)moveToFolder:(NSURL *)location md5:(NSString *)fileUrlMd5
+{
+    
+    if (nil == fileUrlMd5) {
+        return;
+    }
+    
+    NSString *docDir = [PublicMethod getDownloadPath];
+    
+    NSString *desPath = [NSString stringWithFormat:@"%@/%@.mp4", docDir, fileUrlMd5];
+    
+    NSError *error = nil;
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager removeItemAtPath:desPath error:&error];
+    
+    // location是下载的临时文件目录,将文件从临时文件夹复制到沙盒
+    [fileManager moveItemAtPath:location.path toPath:desPath error:&error];
+}
+
 @end

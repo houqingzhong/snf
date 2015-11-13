@@ -132,7 +132,7 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
         [ws parseMd5FromTask:downloadTask.taskDescription md5:&md5];
         if (md5) {
             
-            [ws moveToFolder:location md5:md5];
+            [PublicMethod moveToFolder:location md5:md5];
 
         }
 
@@ -220,8 +220,11 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
     
 }
 
-- (void)startTask:(NSString *)fileUrl
+- (void)startTask:(NSString *)fileUrl md5:(NSString *)filePathMd5
 {
+    if (nil == filePathMd5 || nil == fileUrl) {
+        return;
+    }
     
     if(![[DownloadClient sharedInstance] hasNetwork])
     {
@@ -242,9 +245,9 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
         BOOL flag = NO;
         for (NSURLSessionDownloadTask *task in downloadTasks) {
             NSString *md5 = nil;
-            [self parseMd5FromTask:task.description md5:&md5];
+            [self parseMd5FromTask:task.taskDescription md5:&md5];
             
-            if ([md5 isEqualToString:[fileUrl tb_MD5String]])
+            if ([md5 isEqualToString:filePathMd5])
             {
                 [task suspend];
                 [task resume];
@@ -258,9 +261,8 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
         
         if (!flag) {
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:fileUrl]];
-
             NSURLSessionDownloadTask *task = [ws.downloadManager.session downloadTaskWithRequest:request];
-            task.taskDescription = [NSString stringWithFormat:@"%@:%@", DownloadPrefix, [fileUrl tb_MD5String]];
+            task.taskDescription = [NSString stringWithFormat:@"%@:%@", DownloadPrefix, filePathMd5];
             [task resume];
             NSLog(@"start downloading ...");
             NSLog(@"task  ...  %@", task.taskDescription);
@@ -275,7 +277,7 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
     NSDictionary *dict = [self.dataArray firstObject];
     NSString *fileURL = dict[@"file_url"];
     if ([fileURL hasPrefix:@"http://"] || [fileURL hasPrefix:@"https://"]) {
-        [self startTask:fileURL];
+        [self startTask:fileURL md5:dict[@"md5"]];
     }
 }
 
@@ -285,8 +287,16 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
     if (nil == dict) {
         return;
     }
+    
+    NSString *md5 = dict[@"md5"];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"md5 == %@", md5];
+    NSArray *dicts = [_dataArray filteredArrayUsingPredicate:pre];
+    if (dicts.count > 0) {
+        return;
+    }
+    
     NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
-    newDict[@"md5"] = [dict[@"file_url"] tb_MD5String];
+    newDict[@"md5"] = md5;
     [self.dataArray addObject:newDict];
 }
 
@@ -332,28 +342,6 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
 //    }];
 //}
 
-- (NSURL *)getDownloadFile:(NSString *)fileUrl
-{
-    NSString *docDir = [PublicMethod getDownloadPath];
-    
-    NSString *file = [NSString stringWithFormat:@"%@/%@", docDir, [fileUrl tb_MD5String]];
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    NSURL *filePath = [NSURL URLWithString:file];
-    
-    if([fileManager fileExistsAtPath:filePath.absoluteString])
-    {
-        
-        return filePath;
-    }
-    else
-    {
-        return nil;
-    }
-    
-}
-
 //- (BOOL)isFileDownloaded:(NSString *)fileUrl
 //{
 //        NSArray *array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -378,27 +366,6 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
 //            return NO;
 //        }
 //}
-
-//移动下载完成的文件到目标文件夹   app在下载过程中crash 重启时会走这个逻辑
-- (void)moveToFolder:(NSURL *)location md5:(NSString *)fileUrlMd5
-{
-    
-    if (nil == fileUrlMd5) {
-        return;
-    }
-    
-    NSString *docDir = [PublicMethod getDownloadPath];
-    
-    NSString *desPath = [NSString stringWithFormat:@"%@/%@", docDir, fileUrlMd5];
-    
-    NSError *error = nil;
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager removeItemAtPath:desPath error:&error];
-    
-    // location是下载的临时文件目录,将文件从临时文件夹复制到沙盒
-    [fileManager moveItemAtPath:location.path toPath:desPath error:&error];
-}
 
 - (void)parseMd5FromTask:(NSString *)taskDescription md5:(NSString **)md5
 {

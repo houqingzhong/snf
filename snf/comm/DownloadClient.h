@@ -28,8 +28,6 @@
 
 - (void)addTask:(NSDictionary *)dict;
 
-//file
-- (NSURL *)getDownloadFile:(NSString *)fileUrl;
 
 //network handle
 - (BOOL)hasNetwork;

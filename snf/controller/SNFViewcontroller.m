@@ -10,7 +10,9 @@
 #import "SNFHeader.h"
 
 @interface SNFViewcontroller()<UITableViewDataSource, UITableViewDelegate>
-
+{
+    UIProgressView  *_downloadProgressView;
+}
 @property (nonatomic,strong) UITableView *tableview;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSDictionary *dict;
@@ -36,18 +38,21 @@
     self.dataArray = [NSMutableArray new];
     
     NSMutableDictionary *dict = [NSMutableDictionary new];
-    dict[@"name"] = @"净空法师十念法－视频";
+    dict[@"title"] = @"净空法师十念法－视频";
     dict[@"file_name"] = @"snf_jkfs";
 
     [self.dataArray addObject:dict];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    _downloadProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+
     self.tableview = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableview.dataSource = self;
     self.tableview.delegate  = self;
     [self.view addSubview:self.tableview];
-    
+
+    _downloadProgressView.frame = CGRectMake(0, 60, self.view.width, 1);
+    [self.view addSubview:_downloadProgressView];
 }
 
 
@@ -64,7 +69,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.textLabel.text = _dataArray[indexPath.row];
+    NSDictionary *dict = _dataArray[indexPath.row];
+    cell.textLabel.text = dict[@"title"];
     return cell;
 }
 
@@ -76,7 +82,10 @@
     
     BOOL isPlay = [PublicMethod play:dict controller:self];
     if (!isPlay) {
-        
+        WS(ws);
+        [[DownloadClient sharedInstance] setCallback:^(CGFloat progress, NSString *md5, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
+            [ws  updateDownloadProgress:progress];
+        }];
     }
     
 }
@@ -86,4 +95,8 @@
     return 60;
 }
 
+- (void)updateDownloadProgress:(CGFloat)progress
+{
+    _downloadProgressView.progress = progress;
+}
 @end

@@ -25,6 +25,8 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval);
 
 //file
 + (NSString *)getDownloadPath;
++ (NSURL *)getDownloadFile:(NSString *)fileUrl;
++ (void)moveToFolder:(NSURL *)location md5:(NSString *)fileUrlMd5;
 /**
  * 防止itunes 和 icloud自动备份特定的文件，譬如下载下来的视频等
  */
