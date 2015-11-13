@@ -193,7 +193,18 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval) {
 {
     NSString *fileUrl = [NSString stringWithFormat:@"%@/video/%@",  Host, dict[@"file_name"]];
     
-    NSURL *videoURL = [PublicMethod getDownloadFile:fileUrl];
+    NSString *filePath = [PublicMethod getDownloadFile:fileUrl];
+
+    if (filePath) {
+        
+        NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
+        newDict[@"md5"] = [fileUrl tb_MD5String];
+        [PublicMethod download:newDict];
+        
+        return NO;
+    }
+    
+    NSURL *videoURL = [NSURL fileURLWithPath:filePath];
     
     if (nil == videoURL) {
         
@@ -235,20 +246,20 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval) {
     }];
 }
 
-+ (NSURL *)getDownloadFile:(NSString *)fileUrl
++ (NSString *)getDownloadFile:(NSString *)fileUrl
 {
     NSString *docDir = [PublicMethod getDownloadPath];
     
-    NSString *file = [NSString stringWithFormat:@"%@/%@.mp4", docDir, [fileUrl tb_MD5String]];
+    NSString *file = [NSString stringWithFormat:@"%@/%@", docDir, [fileUrl tb_MD5String]];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    NSURL *filePath = [NSURL URLWithString:file];
+    //NSURL *filePath = [NSURL URLWithString:file];
     
-    if([fileManager fileExistsAtPath:filePath.absoluteString])
+    if([fileManager fileExistsAtPath:file])
     {
         
-        return filePath;
+        return file;
     }
     else
     {
@@ -267,7 +278,7 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval) {
     
     NSString *docDir = [PublicMethod getDownloadPath];
     
-    NSString *desPath = [NSString stringWithFormat:@"%@/%@.mp4", docDir, fileUrlMd5];
+    NSString *desPath = [NSString stringWithFormat:@"%@/%@", docDir, fileUrlMd5];
     
     NSError *error = nil;
     
