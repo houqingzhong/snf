@@ -1,0 +1,1 @@
+AESUTILS_OTHER_LDFLAGS = -framework "Foundation" -framework "UIKit"

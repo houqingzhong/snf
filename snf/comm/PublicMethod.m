@@ -157,10 +157,10 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval) {
 
 + (NSString *)getDownloadPath
 {
-    NSArray *array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [array lastObject];
-    
-    docDir = [docDir stringByAppendingPathComponent:@"mp3"];
+   NSString *docDir = [PublicMethod getDocumentPath];
+    docDir = [docDir stringByAppendingPathComponent:@"video"];
+
+    [PublicMethod createFolder:docDir];
     
     return docDir;
 }
@@ -171,5 +171,65 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval) {
     NSString *docDir = [array lastObject];
     
     return docDir;
+}
+
++ (void)createFolder:(NSString *)folder
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDir = FALSE;
+    BOOL isDirExist = [fileManager fileExistsAtPath:folder isDirectory:&isDir];
+    if (!(isDirExist && isDir)) {
+        NSError *error = nil;
+        BOOL bCreateDir = [fileManager createDirectoryAtPath:folder withIntermediateDirectories:YES attributes:nil error:&error];
+        if(!bCreateDir)
+        {
+            NSLog(@"Create Audio Directory Failed.");
+        }
+        [PublicMethod addSkipBackupAttributeToItemAtURL:[NSURL fileURLWithPath:folder]];
+    }
+}
+
++ (BOOL)play:(NSDictionary *)dict controller:(UIViewController *)targetController
+{
+    NSString *fileUrl = [NSString stringWithFormat:@"%@/video/%@",  Host, dict[@"file_name"]];
+    NSURL *videoURL = [[DownloadClient sharedInstance] getDownloadFile:fileUrl];
+    if (videoURL) {
+        
+        [PublicMethod download:dict];
+        return NO;
+    }
+    //    NSURL *videoURL = [[NSBundle mainBundle] URLForResource:@"512fa609eade4ccd35fc4df95d9629f0" withExtension:@"f4v"];
+    //    NSURL *videoURL = [[NSBundle mainBundle] URLForResource:@"snf_jkfs" withExtension:@"mp4"];
+    
+    //    KxMovieViewController *player = [KxMovieViewController movieViewControllerWithContentPath:[videoURL path] parameters:nil];
+    //    [self presentViewController:player animated:YES completion:nil];
+    
+    MPMoviePlayerViewController *player = [[MPMoviePlayerViewController alloc] initWithContentURL:videoURL];
+    [targetController presentMoviePlayerViewControllerAnimated:player];
+    return YES;
+}
+
++ (void)download:(NSDictionary *)dict
+{
+    if (nil == dict) {
+        return;
+    }
+    NSString *fileUrl = [NSString stringWithFormat:@"%@/video/%@",  Host, dict[@"file_name"]];
+
+    [HttpEngine getDataFromServer:fileUrl key:[fileUrl tb_MD5String] callback:^(id obj) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *file_url = obj[@"file_url"];
+            
+            if ([file_url hasPrefix:@"http://"] || [file_url hasPrefix:@"https://"]) {
+                NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
+                newDict[@"file_url"] = file_url;
+                [[DownloadClient sharedInstance] addTask:newDict];
+            }
+
+            [[DownloadClient sharedInstance] startDownload];
+        });
+    }];
+    
+
 }
 @end

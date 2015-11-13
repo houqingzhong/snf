@@ -19,11 +19,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
     self.localStore = [[YTKKeyValueStore alloc] initDBWithName:@"local-key-value"];
     NSString *tableName = server_data_cahce;
     [_localStore createTableWithName:tableName];
-    
     tableName = setting_data_cache;
     [_localStore createTableWithName:tableName];
     

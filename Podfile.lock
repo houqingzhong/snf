@@ -1,4 +1,12 @@
 PODS:
+  - AesUtils (0.3.3):
+    - AesUtils/HUD (= 0.3.3)
+    - AesUtils/Utils (= 0.3.3)
+  - AesUtils/HUD (0.3.3):
+    - AesUtils/Utils
+    - MBProgressHUD
+  - AesUtils/Utils (0.3.3):
+    - CocoaLumberjack
   - AFNetworking (2.6.2):
     - AFNetworking/NSURLConnection (= 2.6.2)
     - AFNetworking/NSURLSession (= 2.6.2)
@@ -20,6 +28,14 @@ PODS:
   - AFNetworking/UIKit (2.6.2):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - CocoaLumberjack (2.2.0):
+    - CocoaLumberjack/Default (= 2.2.0)
+    - CocoaLumberjack/Extensions (= 2.2.0)
+  - CocoaLumberjack/Core (2.2.0)
+  - CocoaLumberjack/Default (2.2.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.2.0):
+    - CocoaLumberjack/Default
   - FMDB (2.5):
     - FMDB/standard (= 2.5)
   - FMDB/common (2.5)
@@ -29,6 +45,8 @@ PODS:
   - HexColors (2.2.1)
   - JSONKit-NoWarning (1.2)
   - KRVideoPlayer (1.0.1)
+  - MBProgressHUD (0.9.1)
+  - NSString+TBEncryption (1.0)
   - StandardPaths (1.6.4)
   - SVPullToRefreshImprove (0.5)
   - TSMessages (0.9.12):
@@ -40,10 +58,12 @@ PODS:
     - FMDB (~> 2.0)
 
 DEPENDENCIES:
+  - AesUtils
   - AFNetworking (~> 2.0)
   - GCNetworkReachability (~> 1.3.2)
   - JSONKit-NoWarning (~> 1.2)
   - KRVideoPlayer (~> 1.0.1)
+  - NSString+TBEncryption (~> 1.0)
   - StandardPaths (~> 1.6.4)
   - SVPullToRefreshImprove (~> 0.5)
   - TSMessages
@@ -53,12 +73,16 @@ DEPENDENCIES:
   - YTKKeyValueStore (~> 0.1.2)
 
 SPEC CHECKSUMS:
+  AesUtils: 730583c75cd531ba5a114dbe9017d1fb36a04ff0
   AFNetworking: 7f317038a9710cabfa43ec56396b307b45df72ab
+  CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   GCNetworkReachability: 2a7dd53d362220326b3e38df68c91b3ef84418d1
   HexColors: abfd172e329dab59888614ccba6f216cec59289d
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
   KRVideoPlayer: 08918da1b99cae35fd4c15b2ec2b49358d4c985f
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  NSString+TBEncryption: a1cae62b97b856e2dbb63d69a8a450031ecd268f
   StandardPaths: d5c7fadc9ea4327e460a19052d5a18cfbffa689d
   SVPullToRefreshImprove: 5b0760edd107d6ef96c7e09c86fe2d67f6c842a5
   TSMessages: c8cc7b80f2a833af533872cd02010cac061532cc
@@ -67,4 +91,4 @@ SPEC CHECKSUMS:
   WTAZoomNavigationController: 5caaec1d3c04cfeafb8ca8f01c7e1a9addb1797e
   YTKKeyValueStore: 4d002941540dd5108fa23009b71e0f2f937f7a0f
 
-COCOAPODS: 0.39.0
+COCOAPODS: 0.38.2

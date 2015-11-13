@@ -10,33 +10,32 @@
 #import "SNFHeader.h"
 
 @interface DownloadClient : NSObject
+@property (nonatomic, strong) NSMutableArray *dataArray;
+
 @property (nonatomic, strong) void (^backgroundSessionCompletionHandler)();
-@property (nonatomic, strong) void (^callback)(CGFloat progress, NSString *albumId, NSString *trackId, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite);
+@property (nonatomic, strong) void (^callback)(CGFloat progress, NSString *md5, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite);
 
 + (DownloadClient *)sharedInstance;
 
-- (void)startDownload;
-
-- (void)stopDownload:(void (^)(BOOL))callback;
 
 - (void)setCompleteHandler:(void (^)())completionHandler identifier:(NSString *)identifier;
 
--( void)clearOnLanch;
+//task
+-( void)clearOnLanch:(void (^)())callback;
+- (void)startDownload;
+- (void)stopDownload:(void (^)(BOOL))callback;
+- (void)currentDownload:(void (^)(NSString *md5))callback;
 
-- (void)currentDownloadTask;
+- (void)addTask:(NSDictionary *)dict;
 
-- (NSString *)getDownloadPath:(NSDictionary *)album;
+//file
+- (NSURL *)getDownloadFile:(NSString *)fileUrl;
 
-- (BOOL)isFileDownloaded:(NSString *)albumId trackId:(NSString *)trackId;
-
-- (NSURL *)getDownloadFile:(NSDictionary *)album track:(NSDictionary *)track;
-
+//network handle
 - (BOOL)hasNetwork;
-
 - (BOOL)isWifi;
 - (BOOL)is3G;
 - (void)isDownloading:(void (^)(BOOL))callback;
-
 - (void)allow3GDownload;
 
 @end

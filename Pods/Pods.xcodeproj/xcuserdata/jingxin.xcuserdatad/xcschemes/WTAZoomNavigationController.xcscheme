@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3EAAEA33308FAE94D12BF819"
+               BlueprintIdentifier = "97F472016038DF416F776D1A"
                BuildableName = "libWTAZoomNavigationController.a"
                BlueprintName = "WTAZoomNavigationController"
                ReferencedContainer = "container:Pods.xcodeproj">

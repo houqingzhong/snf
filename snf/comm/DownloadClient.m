@@ -18,7 +18,6 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
 }
 @property (nonatomic, strong) AFURLSessionManager *downloadManager;
 @property (nonatomic, assign)   AFNetworkReachabilityStatus status;
-@property (nonatomic, strong) NSURLSessionDownloadTask *currentTask;
 @end
 
 @implementation DownloadClient
@@ -34,7 +33,6 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
 
 - (void)dealloc{
     
-    self.currentTask = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
@@ -50,16 +48,9 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
                                                      name:kConfigCanDownloadStateChanged
                                                    object:nil];
 
-        NSArray *array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *docDir = [array lastObject];
-        
-        NSString *folder = [docDir stringByAppendingPathComponent:@"mp3"];
-
-        
-        [self createFolder:folder];
-        
         self.downloadManager;
-
+        
+        self.dataArray  =[NSMutableArray new];
     }
     
     return self;
@@ -119,16 +110,15 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
 {
     WS(ws);
     [_downloadManager setDownloadTaskDidWriteDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDownloadTask * _Nonnull downloadTask, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
-        NSString *albumId = nil;
-        NSString *trackId = nil;
-        [ws parseInfoFromTask:downloadTask.taskDescription albumId:&albumId trackId:&trackId];
-        if (albumId && trackId) {
+        NSString *md5 = nil;
+        [ws parseMd5FromTask:downloadTask.taskDescription md5:&md5];
+        if (md5) {
             CGFloat progress = (CGFloat)totalBytesWritten/totalBytesExpectedToWrite;
             NSLog(@"%lf", progress);
             
             if (ws.callback) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    ws.callback(progress, albumId, trackId, totalBytesWritten, totalBytesExpectedToWrite);
+                    ws.callback(progress, md5, totalBytesWritten, totalBytesExpectedToWrite);
                 });
 
             }
@@ -138,13 +128,12 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
     
     [_downloadManager setDownloadTaskDidFinishDownloadingBlock:^NSURL * _Nonnull(NSURLSession * _Nonnull session, NSURLSessionDownloadTask * _Nonnull downloadTask, NSURL * _Nonnull location) {
         
-        NSString *albumId = nil;
-        NSString *trackId = nil;
-        [ws parseInfoFromTask:downloadTask.taskDescription albumId:&albumId trackId:&trackId];
-        if (albumId && trackId) {
+        NSString *md5 = nil;
+        [ws parseMd5FromTask:downloadTask.taskDescription md5:&md5];
+        if (md5) {
             
-            [ws moveToFolder:location albumId:albumId trackId:trackId];
-            
+            [ws moveToFolder:location md5:md5];
+
         }
 
         return nil;
@@ -153,12 +142,14 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
     
     [_downloadManager setTaskDidCompleteBlock:^(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task, NSError * _Nullable error) {
         
-        ws.currentTask = nil;
         if (error) {
             NSInteger statusCode = [(NSHTTPURLResponse *)task.response statusCode];
             if ((-1 == error.code && 0 == statusCode) || (2 == error.code && 200 == statusCode)) {
 
-                [ws invalidSession];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [ws invalidSession];
+                });
+                
                 
             }
             else if (kCFURLErrorCancelled == error.code) {
@@ -169,20 +160,21 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
             }
             else
             {
-                [ws startDownload];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [ws startDownload];
+                });
+
             }
             
             return ;
         }
         
-        NSString *albumId = nil;
-        NSString *trackId = nil;
-        [ws parseInfoFromTask:task.taskDescription albumId:&albumId trackId:&trackId];
-        if (albumId && trackId) {
+        NSString *md5 = nil;
+        [ws parseMd5FromTask:task.taskDescription md5:&md5];
+        if (md5) {
             if (error) {
-                NSLog(@"fail: %@  %@  %@", albumId, trackId, error);
+                NSLog(@"fail:  %@  %@", md5, error);
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    
                     
                     [ws startDownload];
                     
@@ -191,14 +183,11 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
             }
             else
             {
-                NSLog(@"sucess: %@  %@", albumId, trackId);
-                
-
-              
+                NSLog(@"sucess: %@", md5);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                    ws.currentTask = nil;
+                    [ws removeTask:md5];
                     [ws startDownload];
                     
                 });
@@ -231,7 +220,7 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
     
 }
 
-- (void)startTask:(NSDictionary *)album track:(NSDictionary *)track
+- (void)startTask:(NSString *)fileUrl
 {
     
     if(![[DownloadClient sharedInstance] hasNetwork])
@@ -243,8 +232,7 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
         return;
     }
     
-    NSString * url =  track[@"play_path"];
-    if([NSObject isNull:url])
+    if([NSObject isNull:fileUrl])
     {
         return;
     }
@@ -253,11 +241,11 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
     [_downloadManager.session getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
         BOOL flag = NO;
         for (NSURLSessionDownloadTask *task in downloadTasks) {
-            NSString *albumId_ = nil;
-            NSString *trackId_ = nil;
-            [self parseInfoFromTask:task.description albumId:&albumId_ trackId:&trackId_];
+            NSString *md5 = nil;
+            [self parseMd5FromTask:task.description md5:&md5];
             
-            if ((albumId_.integerValue == [album[@"id"] integerValue])  && (trackId_.integerValue == [track[@"id"] integerValue])) {
+            if ([md5 isEqualToString:[fileUrl tb_MD5String]])
+            {
                 [task suspend];
                 [task resume];
                 flag = YES;
@@ -269,41 +257,46 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
         }
         
         if (!flag) {
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:fileUrl]];
 
-            ws.currentTask = [ws.downloadManager.session downloadTaskWithRequest:request];
-            ws.currentTask.taskDescription = [NSString stringWithFormat:@"%@:%@:%@", DownloadPrefix, album[@"id"], track[@"id"]];
-            [ws.currentTask resume];
+            NSURLSessionDownloadTask *task = [ws.downloadManager.session downloadTaskWithRequest:request];
+            task.taskDescription = [NSString stringWithFormat:@"%@:%@", DownloadPrefix, [fileUrl tb_MD5String]];
+            [task resume];
             NSLog(@"start downloading ...");
-            NSLog(@"task  ...  %@", ws.currentTask.taskDescription);
+            NSLog(@"task  ...  %@", task.taskDescription);
             
         }
-        
     }];
-    
 }
 
 - (void)startDownload
 {
     
-    if(self.currentTask)
-    {
+    NSDictionary *dict = [self.dataArray firstObject];
+    NSString *fileURL = dict[@"file_url"];
+    if ([fileURL hasPrefix:@"http://"] || [fileURL hasPrefix:@"https://"]) {
+        [self startTask:fileURL];
+    }
+}
+
+
+- (void)addTask:(NSDictionary *)dict
+{
+    if (nil == dict) {
         return;
     }
-    
-//    [PublicMethod getDownloadTask:^(NSDictionary *dict) {
-//        NSDictionary *album = dict[@"album"];
-//        NSDictionary *track = dict[@"track"];
-//        if([track[@"download_state"] integerValue] != DownloadStateDownloadFinish)
-//        {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [self startTask:album track:track];
-//            });
-//
-//        }
-//        
-//    }];
+    NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
+    newDict[@"md5"] = [dict[@"file_url"] tb_MD5String];
+    [self.dataArray addObject:newDict];
+}
 
+- (void)removeTask:(NSString *)md5
+{
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"md5 == %@", md5];
+    NSArray *dicts = [_dataArray filteredArrayUsingPredicate:pre];
+    if (dicts.count > 0) {
+        [_dataArray removeObjectsInArray:dicts];
+    }
 }
 
 - (void)stopDownload:(void (^)(BOOL))callback
@@ -339,15 +332,11 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
 //    }];
 //}
 
-- (NSURL *)getDownloadFile:(NSDictionary *)album track:(NSDictionary *)track
+- (NSURL *)getDownloadFile:(NSString *)fileUrl
 {
     NSString *docDir = [PublicMethod getDownloadPath];
     
-    NSString *folder = [docDir stringByAppendingPathComponent:album[@"id"]];
-    
-    [self createFolder:folder];
-    
-    NSString *file = [NSString stringWithFormat:@"%@/%@.m4a", folder, track[@"id"]];
+    NSString *file = [NSString stringWithFormat:@"%@/%@", docDir, [fileUrl tb_MD5String]];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -365,49 +354,42 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
     
 }
 
-- (BOOL)isFileDownloaded:(NSString *)albumId trackId:(NSString *)trackId
-{
-        NSArray *array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *docDir = [array lastObject];
-        
-        docDir = [docDir stringByAppendingPathComponent:@"mp3"];
-        NSString *folder = [docDir stringByAppendingPathComponent:albumId];
-        
-        [self createFolder:folder];
-    
-        NSString *file = [NSString stringWithFormat:@"%@/%@.m4a", folder, trackId];
-
-        NSURL *filePath = [NSURL URLWithString:file];
-
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if([fileManager fileExistsAtPath:filePath.absoluteString])
-        {
-
-            return YES;
-        }
-        else
-        {
-            return NO;
-        }
-}
+//- (BOOL)isFileDownloaded:(NSString *)fileUrl
+//{
+//        NSArray *array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString *docDir = [array lastObject];
+//        
+//        docDir = [docDir stringByAppendingPathComponent:@"video"];
+//    
+//        [self createFolder:docDir];
+//    
+//        NSString *file = [NSString stringWithFormat:@"%@/%@", docDir, [fileUrl tb_MD5String]];
+//
+//        NSURL *filePath = [NSURL URLWithString:file];
+//
+//        NSFileManager *fileManager = [NSFileManager defaultManager];
+//        if([fileManager fileExistsAtPath:filePath.absoluteString])
+//        {
+//
+//            return YES;
+//        }
+//        else
+//        {
+//            return NO;
+//        }
+//}
 
 //移动下载完成的文件到目标文件夹   app在下载过程中crash 重启时会走这个逻辑
-- (void)moveToFolder:(NSURL *)location albumId:(NSString *)albumId trackId:(NSString *)trackId
+- (void)moveToFolder:(NSURL *)location md5:(NSString *)fileUrlMd5
 {
     
-    if (!albumId || !trackId) {
+    if (nil == fileUrlMd5) {
         return;
     }
     
-    NSArray *array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [array lastObject];
+    NSString *docDir = [PublicMethod getDownloadPath];
     
-    docDir = [docDir stringByAppendingPathComponent:@"mp3"];
-    NSString *folder = [docDir stringByAppendingPathComponent:albumId];
-    
-    [self createFolder:folder];
-    
-    NSString *desPath = [NSString stringWithFormat:@"%@/%@.m4a", folder, trackId];
+    NSString *desPath = [NSString stringWithFormat:@"%@/%@", docDir, fileUrlMd5];
     
     NSError *error = nil;
 
@@ -418,9 +400,8 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
     [fileManager moveItemAtPath:location.path toPath:desPath error:&error];
 }
 
-- (void)parseInfoFromTask:(NSString *)taskDescription albumId:(NSString **)albumId trackId:(NSString **)trackId
+- (void)parseMd5FromTask:(NSString *)taskDescription md5:(NSString **)md5
 {
-//MP3DOWNLOAD:2792958:7967732
 
     if (!taskDescription) {
         return ;
@@ -429,31 +410,11 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
     if ([taskDescription hasPrefix:DownloadPrefix])
     {
         NSArray *strs = [taskDescription componentsSeparatedByString:@":"];
-        if (strs.count == 3) {
-            if (albumId) {
-                *albumId = strs[1];
-            }
-            
-            if (trackId) {
-                *trackId = strs[2];
+        if (strs.count == 2) {
+            if (md5) {
+                *md5 = strs[1];
             }
         }
-    }
-}
-
-- (void)createFolder:(NSString *)folder
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL isDir = FALSE;
-    BOOL isDirExist = [fileManager fileExistsAtPath:folder isDirectory:&isDir];
-    if (!(isDirExist && isDir)) {
-        NSError *error = nil;
-        BOOL bCreateDir = [fileManager createDirectoryAtPath:folder withIntermediateDirectories:YES attributes:nil error:&error];
-        if(!bCreateDir)
-        {
-            NSLog(@"Create Audio Directory Failed.");
-        }
-        [PublicMethod addSkipBackupAttributeToItemAtURL:[NSURL fileURLWithPath:folder]];
     }
 }
 
@@ -464,44 +425,42 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
 }
 
 
--( void)clearOnLanch
+-( void)clearOnLanch:(void (^)())callback
 {
-
     [_downloadManager.session getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
+        
         for (NSURLSessionDownloadTask *task in downloadTasks) {
             [task cancel];
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self startDownload];
-        });
+        if (callback) {
+            callback();
+        }
 
     }];
 }
 
-- (void)currentDownloadTask
+- (void)currentDownload:(void (^)(NSString *md5))callback;
 {
+    WS(ws);
+    [_downloadManager.session getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
+        
+        NSString *md5 = nil;
 
-    NSString *albumId = nil;
-    NSString *trackId = nil;
-    [self parseInfoFromTask:_currentTask.taskDescription albumId:&albumId trackId:&trackId];
-    
-//    [PublicMethod getDownloadTracks:albumId trackId:trackId callback:^(NSDictionary *dict) {
-//        
-//    }];
-}
+        BOOL flag = NO;
+        for (NSURLSessionDownloadTask *downloadTask in downloadTasks) {
+            [ws parseMd5FromTask:downloadTask.taskDescription md5:&md5];
+            if (NSURLSessionTaskStateRunning == downloadTask.state) {
+                flag = YES;
+                break;
+            }
+        }
+        
+        if (flag && callback) {
+            callback(md5);
+        }
+    }];
 
-- (NSString *)getDownloadPath:(NSDictionary *)album
-{
-    NSArray *array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [array lastObject];
-    
-    docDir = [docDir stringByAppendingPathComponent:@"mp3"];
-    NSString *folder = [docDir stringByAppendingPathComponent:album[@"id"]];
-    
-    [self createFolder:folder];
-
-    return folder;
     
 }
 
@@ -509,7 +468,6 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
 {
     App(app);
     return GCNetworkReachabilityStatusNotReachable != app.reachability.currentReachabilityStatus;
-    
 }
 
 - (BOOL)isWifi
@@ -530,23 +488,12 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
 
     [_downloadManager.session getTasksWithCompletionHandler:^(NSArray<NSURLSessionDataTask *> * _Nonnull dataTasks, NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks, NSArray<NSURLSessionDownloadTask *> * _Nonnull downloadTasks) {
 
-        __block BOOL flag = (downloadTasks.count > 0) ? YES : NO;
+        BOOL flag = (downloadTasks.count > 0) ? YES : NO;
         
-        if (!flag) {
-//            [PublicMethod getDownloadTask:^(NSDictionary *dict) {
-//                flag = dict ? YES : NO;
-//                
-//                if (callback) {
-//                    callback(flag);
-//                }
-//            }];
+        if (callback) {
+            callback(flag);
         }
-        else
-        {
-            if (callback) {
-                callback(flag);
-            }
-        }
+        
     }];
 }
 

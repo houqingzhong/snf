@@ -13,24 +13,26 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval);
 
 @interface PublicMethod : NSObject
 
+//data save 
 + (id)getLocalData:(NSString *)key;
 + (void)saveDataToLocal:(id)obj key:(NSString *)key;
 
+//network
 + (void)allowGprsDownload:(BOOL)flag;
-
 + (void)allowGprsPlay:(BOOL)flag;
-
 + (BOOL)isAllowDownloadInGprs;
-
 + (BOOL)isAllowPlayInGprs;
 
+//file
++ (NSString *)getDownloadPath;
 /**
  * 防止itunes 和 icloud自动备份特定的文件，譬如下载下来的视频等
  */
 + (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL;
 
-+ (NSString *)getDownloadPath;
 
-+ (NSString *)getDocumentPath;
-
+//play
++ (BOOL)play:(NSDictionary *)dict controller:(UIViewController *)targetController;
+//download
++ (void)download:(NSDictionary *)dict;
 @end

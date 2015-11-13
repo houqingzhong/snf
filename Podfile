@@ -14,3 +14,5 @@ pod 'YTKKeyValueStore', '~> 0.1.2'
 pod "TSMessages"
 pod 'SVPullToRefreshImprove', '~> 0.5'
 pod 'GCNetworkReachability', '~> 1.3.2'
+pod 'NSString+TBEncryption', '~> 1.0'
+pod "AesUtils"

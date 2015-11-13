@@ -9,6 +9,7 @@
 #ifndef SNFHeader_h
 #define SNFHeader_h
 
+#define Host @"http://www.zhiyurencai.com/music/api"
 #define server_data_cahce  @"server_data_cahce"
 #define setting_data_cache @"setting_data_cache"
 
@@ -30,7 +31,7 @@
 #define XA ScreenSize.width/640
 #define WS(s) __weak typeof (self) s = self
 
-
+#import <NSString+TBEncryption.h>
 #import <WTAZoomNavigationController.h>
 //#import <PBJVideoPlayer/PBJVideoPlayer.h>
 //#import <FFmpegWrapper.h>
@@ -49,6 +50,7 @@
 #import "PublicMethod.h"
 #import "NSObject+Extend.h"
 #import "DownloadClient.h"
+#import "HttpEngine.h"
 
 #define App(s) AppDelegate * s = (AppDelegate *)[[UIApplication sharedApplication] delegate]
 

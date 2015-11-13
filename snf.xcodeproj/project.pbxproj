@@ -14,6 +14,11 @@
 		1D76B1731BEAFE2E0054DDC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D76B1711BEAFE2E0054DDC9 /* Main.storyboard */; };
 		1D76B1751BEAFE2E0054DDC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D76B1741BEAFE2E0054DDC9 /* Assets.xcassets */; };
 		1D76B1781BEAFE2E0054DDC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D76B1761BEAFE2E0054DDC9 /* LaunchScreen.storyboard */; };
+		1D8258AF1BF5E03500C8D6B8 /* DownloadClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8258AA1BF5E03500C8D6B8 /* DownloadClient.m */; };
+		1D8258B01BF5E03500C8D6B8 /* NSObject+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8258AC1BF5E03500C8D6B8 /* NSObject+Extend.m */; };
+		1D8258B11BF5E03500C8D6B8 /* PublicMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8258AE1BF5E03500C8D6B8 /* PublicMethod.m */; };
+		1D8258B41BF5E60E00C8D6B8 /* HttpEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8258B31BF5E60E00C8D6B8 /* HttpEngine.m */; };
+		1D8258B81BF5F41C00C8D6B8 /* SNFVideoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8258B71BF5F41C00C8D6B8 /* SNFVideoCell.m */; };
 		1DAAAEB91BF36130007475C4 /* SNFViewcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAAEB81BF36130007475C4 /* SNFViewcontroller.m */; };
 		1DAAAEBE1BF36A4F007475C4 /* SNFBaseViewcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAAEBD1BF36A4F007475C4 /* SNFBaseViewcontroller.m */; };
 		1DAE90C11BF3454B00682657 /* 254236.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DAE90C01BF3454B00682657 /* 254236.json */; };
@@ -23,9 +28,6 @@
 		1DCEAFEF1BF31800002804B1 /* WTALeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCEAFEB1BF31800002804B1 /* WTALeftViewController.m */; };
 		1DCEAFF01BF31800002804B1 /* WTALeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCEAFEC1BF31800002804B1 /* WTALeftViewController.xib */; };
 		93A2FBCDA905BBEE83834DBF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 616F9AED7F3AB8691145F8C8 /* libPods.a */; };
-		FF3AD21E1BF39C000092D817 /* DownloadClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3AD21D1BF39C000092D817 /* DownloadClient.m */; };
-		FF3AD2211BF39C8F0092D817 /* PublicMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3AD2201BF39C8F0092D817 /* PublicMethod.m */; };
-		FFCDD1CE1BF39E270043A523 /* NSObject+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCDD1CD1BF39E270043A523 /* NSObject+Extend.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,13 +44,23 @@
 		1D76B1741BEAFE2E0054DDC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1D76B1771BEAFE2E0054DDC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1D76B1791BEAFE2E0054DDC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D8258A91BF5E03500C8D6B8 /* DownloadClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadClient.h; sourceTree = "<group>"; };
+		1D8258AA1BF5E03500C8D6B8 /* DownloadClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadClient.m; sourceTree = "<group>"; };
+		1D8258AB1BF5E03500C8D6B8 /* NSObject+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extend.h"; sourceTree = "<group>"; };
+		1D8258AC1BF5E03500C8D6B8 /* NSObject+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extend.m"; sourceTree = "<group>"; };
+		1D8258AD1BF5E03500C8D6B8 /* PublicMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicMethod.h; sourceTree = "<group>"; };
+		1D8258AE1BF5E03500C8D6B8 /* PublicMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicMethod.m; sourceTree = "<group>"; };
+		1D8258B21BF5E60E00C8D6B8 /* HttpEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpEngine.h; sourceTree = "<group>"; };
+		1D8258B31BF5E60E00C8D6B8 /* HttpEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpEngine.m; sourceTree = "<group>"; };
+		1D8258B61BF5F41C00C8D6B8 /* SNFVideoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFVideoCell.h; sourceTree = "<group>"; };
+		1D8258B71BF5F41C00C8D6B8 /* SNFVideoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFVideoCell.m; sourceTree = "<group>"; };
 		1DAAAEB71BF36130007475C4 /* SNFViewcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFViewcontroller.h; sourceTree = "<group>"; };
 		1DAAAEB81BF36130007475C4 /* SNFViewcontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFViewcontroller.m; sourceTree = "<group>"; };
 		1DAAAEBC1BF36A4F007475C4 /* SNFBaseViewcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFBaseViewcontroller.h; sourceTree = "<group>"; };
 		1DAAAEBD1BF36A4F007475C4 /* SNFBaseViewcontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFBaseViewcontroller.m; sourceTree = "<group>"; };
 		1DAE90C01BF3454B00682657 /* 254236.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 254236.json; sourceTree = "<group>"; };
 		1DAE90C31BF3581000682657 /* snf_jkfs.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = snf_jkfs.mp4; sourceTree = "<group>"; };
-		1DCEAFDE1BF31494002804B1 /* SNFHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SNFHeader.h; sourceTree = "<group>"; };
+		1DCEAFDE1BF31494002804B1 /* SNFHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SNFHeader.h; path = ../SNFHeader.h; sourceTree = "<group>"; };
 		1DCEAFE71BF31800002804B1 /* WTAContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTAContentViewController.h; sourceTree = "<group>"; };
 		1DCEAFE81BF31800002804B1 /* WTAContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTAContentViewController.m; sourceTree = "<group>"; };
 		1DCEAFE91BF31800002804B1 /* WTAContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTAContentViewController.xib; sourceTree = "<group>"; };
@@ -58,12 +70,6 @@
 		616F9AED7F3AB8691145F8C8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F91A4271A6872BF0C0C5E9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FBD06019133F495FE8A456BE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		FF3AD21C1BF39C000092D817 /* DownloadClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadClient.h; sourceTree = "<group>"; };
-		FF3AD21D1BF39C000092D817 /* DownloadClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadClient.m; sourceTree = "<group>"; };
-		FF3AD21F1BF39C8F0092D817 /* PublicMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicMethod.h; sourceTree = "<group>"; };
-		FF3AD2201BF39C8F0092D817 /* PublicMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicMethod.m; sourceTree = "<group>"; };
-		FFCDD1CC1BF39E270043A523 /* NSObject+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extend.h"; sourceTree = "<group>"; };
-		FFCDD1CD1BF39E270043A523 /* NSObject+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extend.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,18 +105,13 @@
 		1D76B1671BEAFE2E0054DDC9 /* snf */ = {
 			isa = PBXGroup;
 			children = (
-				1DCEAFDE1BF31494002804B1 /* SNFHeader.h */,
+				1D8258A81BF5E03500C8D6B8 /* comm */,
+				1D8258B51BF5F3EC00C8D6B8 /* view */,
 				1DCEAFE61BF31800002804B1 /* controller */,
 				1D76B16B1BEAFE2E0054DDC9 /* AppDelegate.h */,
 				1D76B16C1BEAFE2E0054DDC9 /* AppDelegate.m */,
 				1D76B16E1BEAFE2E0054DDC9 /* ViewController.h */,
 				1D76B16F1BEAFE2E0054DDC9 /* ViewController.m */,
-				FF3AD21C1BF39C000092D817 /* DownloadClient.h */,
-				FF3AD21D1BF39C000092D817 /* DownloadClient.m */,
-				FFCDD1CC1BF39E270043A523 /* NSObject+Extend.h */,
-				FFCDD1CD1BF39E270043A523 /* NSObject+Extend.m */,
-				FF3AD21F1BF39C8F0092D817 /* PublicMethod.h */,
-				FF3AD2201BF39C8F0092D817 /* PublicMethod.m */,
 				1D76B1711BEAFE2E0054DDC9 /* Main.storyboard */,
 				1D76B1741BEAFE2E0054DDC9 /* Assets.xcassets */,
 				1D76B1761BEAFE2E0054DDC9 /* LaunchScreen.storyboard */,
@@ -129,6 +130,31 @@
 				1D76B1691BEAFE2E0054DDC9 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1D8258A81BF5E03500C8D6B8 /* comm */ = {
+			isa = PBXGroup;
+			children = (
+				1DCEAFDE1BF31494002804B1 /* SNFHeader.h */,
+				1D8258B21BF5E60E00C8D6B8 /* HttpEngine.h */,
+				1D8258B31BF5E60E00C8D6B8 /* HttpEngine.m */,
+				1D8258A91BF5E03500C8D6B8 /* DownloadClient.h */,
+				1D8258AA1BF5E03500C8D6B8 /* DownloadClient.m */,
+				1D8258AB1BF5E03500C8D6B8 /* NSObject+Extend.h */,
+				1D8258AC1BF5E03500C8D6B8 /* NSObject+Extend.m */,
+				1D8258AD1BF5E03500C8D6B8 /* PublicMethod.h */,
+				1D8258AE1BF5E03500C8D6B8 /* PublicMethod.m */,
+			);
+			path = comm;
+			sourceTree = "<group>";
+		};
+		1D8258B51BF5F3EC00C8D6B8 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				1D8258B61BF5F41C00C8D6B8 /* SNFVideoCell.h */,
+				1D8258B71BF5F41C00C8D6B8 /* SNFVideoCell.m */,
+			);
+			path = view;
 			sourceTree = "<group>";
 		};
 		1DCEAFE61BF31800002804B1 /* controller */ = {
@@ -177,7 +203,6 @@
 				1D76B1621BEAFE2E0054DDC9 /* Frameworks */,
 				1D76B1631BEAFE2E0054DDC9 /* Resources */,
 				DF60655DD95D48AA4337BE52 /* Copy Pods Resources */,
-				3F97A6CF5B3F24FA707C6A08 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -239,21 +264,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3F97A6CF5B3F24FA707C6A08 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4B966A08A16D4F85DC247F8A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -293,14 +303,16 @@
 			files = (
 				1D76B1701BEAFE2E0054DDC9 /* ViewController.m in Sources */,
 				1D76B16D1BEAFE2E0054DDC9 /* AppDelegate.m in Sources */,
-				FF3AD21E1BF39C000092D817 /* DownloadClient.m in Sources */,
+				1D8258AF1BF5E03500C8D6B8 /* DownloadClient.m in Sources */,
+				1D8258B81BF5F41C00C8D6B8 /* SNFVideoCell.m in Sources */,
+				1D8258B01BF5E03500C8D6B8 /* NSObject+Extend.m in Sources */,
+				1D8258B11BF5E03500C8D6B8 /* PublicMethod.m in Sources */,
 				1DAAAEBE1BF36A4F007475C4 /* SNFBaseViewcontroller.m in Sources */,
+				1D8258B41BF5E60E00C8D6B8 /* HttpEngine.m in Sources */,
 				1DAAAEB91BF36130007475C4 /* SNFViewcontroller.m in Sources */,
-				FFCDD1CE1BF39E270043A523 /* NSObject+Extend.m in Sources */,
 				1D76B16A1BEAFE2E0054DDC9 /* main.m in Sources */,
 				1DCEAFEF1BF31800002804B1 /* WTALeftViewController.m in Sources */,
 				1DCEAFED1BF31800002804B1 /* WTAContentViewController.m in Sources */,
-				FF3AD2211BF39C8F0092D817 /* PublicMethod.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

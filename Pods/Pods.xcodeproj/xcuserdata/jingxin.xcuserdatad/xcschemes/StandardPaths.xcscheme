@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0BA9E1A303960217E7481DD2"
+               BlueprintIdentifier = "E46D9AE9689C1E367387E02F"
                BuildableName = "libStandardPaths.a"
                BlueprintName = "StandardPaths"
                ReferencedContainer = "container:Pods.xcodeproj">

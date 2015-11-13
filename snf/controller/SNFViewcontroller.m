@@ -12,7 +12,7 @@
 @interface SNFViewcontroller()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic,strong) UITableView *tableview;
-@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSDictionary *dict;
 
 @end
@@ -33,7 +33,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.dataArray = @[@"净空法师十念法－视频"];
+    self.dataArray = [NSMutableArray new];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    dict[@"name"] = @"净空法师十念法－视频";
+    dict[@"file_name"] = @"snf_jkfs";
+
+    [self.dataArray addObject:dict];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -41,7 +47,6 @@
     self.tableview.dataSource = self;
     self.tableview.delegate  = self;
     [self.view addSubview:self.tableview];
-    
     
 }
 
@@ -67,16 +72,12 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    NSURL *videoURL = [[NSBundle mainBundle] URLForResource:@"512fa609eade4ccd35fc4df95d9629f0" withExtension:@"f4v"];
-    NSURL *videoURL = [[NSBundle mainBundle] URLForResource:@"snf_jkfs" withExtension:@"mp4"];
-
-
-//    KxMovieViewController *player = [KxMovieViewController movieViewControllerWithContentPath:[videoURL path] parameters:nil];
-//    [self presentViewController:player animated:YES completion:nil];
+    NSDictionary *dict = _dataArray[indexPath.row];
     
-    
-    MPMoviePlayerViewController *player = [[MPMoviePlayerViewController alloc] initWithContentURL:videoURL];
-    [self presentMoviePlayerViewControllerAnimated:player];
+    BOOL isPlay = [PublicMethod play:dict controller:self];
+    if (!isPlay) {
+        
+    }
     
 }
 
