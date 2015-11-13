@@ -195,7 +195,7 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval) {
     
     NSString *filePath = [PublicMethod getDownloadFile:fileUrl];
 
-    if (filePath) {
+    if (nil == filePath) {
         
         NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
         newDict[@"md5"] = [fileUrl tb_MD5String];
@@ -250,7 +250,7 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval) {
 {
     NSString *docDir = [PublicMethod getDownloadPath];
     
-    NSString *file = [NSString stringWithFormat:@"%@/%@", docDir, [fileUrl tb_MD5String]];
+    NSString *file = [NSString stringWithFormat:@"%@/%@.mp4", docDir, [fileUrl tb_MD5String]];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -278,7 +278,7 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval) {
     
     NSString *docDir = [PublicMethod getDownloadPath];
     
-    NSString *desPath = [NSString stringWithFormat:@"%@/%@", docDir, fileUrlMd5];
+    NSString *desPath = [NSString stringWithFormat:@"%@/%@.mp4", docDir, fileUrlMd5];
     
     NSError *error = nil;
     
