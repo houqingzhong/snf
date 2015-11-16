@@ -69,7 +69,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     _downloadProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     _downloadProgressView.progressTintColor = [UIColor redColor];
-    _downloadProgressView.trackTintColor = [UIColor grayColor];
+    _downloadProgressView.trackTintColor = [UIColor clearColor];
 
     self.tableview = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableview.dataSource = self;
@@ -89,11 +89,16 @@
     static NSString *Identifier = @"Identifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:Identifier];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     NSDictionary *dict = _dataArray[indexPath.row];
     cell.textLabel.text = dict[@"title"];
+
+    cell.detailTextLabel.numberOfLines = 2;
+    cell.detailTextLabel.textColor = [UIColor grayColor];
+    cell.detailTextLabel.text = dict[@"sub_title"];
+    
     return cell;
 }
 
@@ -102,36 +107,35 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSDictionary *dict = _dataArray[indexPath.row];
-    
     BOOL isPlay = [PublicMethod play:dict controller:self];
     if (!isPlay) {
         WS(ws);
         [[DownloadClient sharedInstance] setCallback:^(CGFloat progress, NSString *md5, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
             [ws  updateDownloadProgress:progress];
         }];
+        
+        [self.tableView reloadData];
     }
     
-    
-    
-//    SCLRTimeSelector* timeSelector = [[SCLRTimeSelector alloc]
-//                                      initWithSuperView:self.view
-//                                      withDelegate:(NSObject<SCLRTimeSelectorDelegate> *)self
-//                                      initialHour:0
-//                                      initialMinute:0
-//                                      andUserData:nil];
-//    
-//    [self.view addSubview:timeSelector];
-//    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
+
     return 60;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 60;
+//    if (0 == section && [DownloadClient sharedInstance].dataArray.count > 0) {
+//        return 60;
+//    }
+    
+    if (0 == section) {
+        return 1;
+    }
+
+    return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -143,7 +147,7 @@
         if (nil == v) {
             v = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:@"Section_Header_ID"];
             
-            _downloadProgressView.frame = CGRectMake(0, 0, self.view.width, 2);
+            _downloadProgressView.frame = CGRectMake(0, 0, self.view.width, 1);
             
             [v addSubview:_downloadProgressView];
             
