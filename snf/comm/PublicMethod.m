@@ -192,7 +192,6 @@ NSString *FormattedTimeStringFromTimeInterval(NSTimeInterval timeInterval) {
 + (BOOL)play:(NSDictionary *)dict controller:(UIViewController *)targetController
 {
     NSString *fileUrl = [NSString stringWithFormat:@"%@/video/%@",  Host, dict[@"file_name"]];
-    
     NSString *filePath = [PublicMethod getDownloadFile:fileUrl];
 
     if (nil == filePath) {

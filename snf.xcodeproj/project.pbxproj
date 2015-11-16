@@ -19,6 +19,8 @@
 		1D8258B11BF5E03500C8D6B8 /* PublicMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8258AE1BF5E03500C8D6B8 /* PublicMethod.m */; };
 		1D8258B41BF5E60E00C8D6B8 /* HttpEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8258B31BF5E60E00C8D6B8 /* HttpEngine.m */; };
 		1D8258B81BF5F41C00C8D6B8 /* SNFVideoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8258B71BF5F41C00C8D6B8 /* SNFVideoCell.m */; };
+		1D8E7B8C1BF9A7FF0023630E /* SCLRTimeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8E7B8B1BF9A7FF0023630E /* SCLRTimeSelector.m */; };
+		1D8E7B8F1BF9B2C90023630E /* RMPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8E7B8E1BF9B2C90023630E /* RMPickerViewController.m */; };
 		1DAAAEB91BF36130007475C4 /* SNFViewcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAAEB81BF36130007475C4 /* SNFViewcontroller.m */; };
 		1DAAAEBE1BF36A4F007475C4 /* SNFBaseViewcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAAEBD1BF36A4F007475C4 /* SNFBaseViewcontroller.m */; };
 		1DAE90C11BF3454B00682657 /* 254236.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DAE90C01BF3454B00682657 /* 254236.json */; };
@@ -54,6 +56,10 @@
 		1D8258B31BF5E60E00C8D6B8 /* HttpEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpEngine.m; sourceTree = "<group>"; };
 		1D8258B61BF5F41C00C8D6B8 /* SNFVideoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFVideoCell.h; sourceTree = "<group>"; };
 		1D8258B71BF5F41C00C8D6B8 /* SNFVideoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFVideoCell.m; sourceTree = "<group>"; };
+		1D8E7B8A1BF9A7FF0023630E /* SCLRTimeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLRTimeSelector.h; sourceTree = "<group>"; };
+		1D8E7B8B1BF9A7FF0023630E /* SCLRTimeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLRTimeSelector.m; sourceTree = "<group>"; };
+		1D8E7B8D1BF9B2C90023630E /* RMPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPickerViewController.h; sourceTree = "<group>"; };
+		1D8E7B8E1BF9B2C90023630E /* RMPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPickerViewController.m; sourceTree = "<group>"; };
 		1DAAAEB71BF36130007475C4 /* SNFViewcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFViewcontroller.h; sourceTree = "<group>"; };
 		1DAAAEB81BF36130007475C4 /* SNFViewcontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFViewcontroller.m; sourceTree = "<group>"; };
 		1DAAAEBC1BF36A4F007475C4 /* SNFBaseViewcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFBaseViewcontroller.h; sourceTree = "<group>"; };
@@ -151,6 +157,8 @@
 		1D8258B51BF5F3EC00C8D6B8 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				1D8E7B8A1BF9A7FF0023630E /* SCLRTimeSelector.h */,
+				1D8E7B8B1BF9A7FF0023630E /* SCLRTimeSelector.m */,
 				1D8258B61BF5F41C00C8D6B8 /* SNFVideoCell.h */,
 				1D8258B71BF5F41C00C8D6B8 /* SNFVideoCell.m */,
 			);
@@ -160,6 +168,8 @@
 		1DCEAFE61BF31800002804B1 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				1D8E7B8D1BF9B2C90023630E /* RMPickerViewController.h */,
+				1D8E7B8E1BF9B2C90023630E /* RMPickerViewController.m */,
 				1DCEAFE71BF31800002804B1 /* WTAContentViewController.h */,
 				1DCEAFE81BF31800002804B1 /* WTAContentViewController.m */,
 				1DCEAFE91BF31800002804B1 /* WTAContentViewController.xib */,
@@ -301,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D8E7B8C1BF9A7FF0023630E /* SCLRTimeSelector.m in Sources */,
 				1D76B1701BEAFE2E0054DDC9 /* ViewController.m in Sources */,
 				1D76B16D1BEAFE2E0054DDC9 /* AppDelegate.m in Sources */,
 				1D8258AF1BF5E03500C8D6B8 /* DownloadClient.m in Sources */,
@@ -309,6 +320,7 @@
 				1D8258B11BF5E03500C8D6B8 /* PublicMethod.m in Sources */,
 				1DAAAEBE1BF36A4F007475C4 /* SNFBaseViewcontroller.m in Sources */,
 				1D8258B41BF5E60E00C8D6B8 /* HttpEngine.m in Sources */,
+				1D8E7B8F1BF9B2C90023630E /* RMPickerViewController.m in Sources */,
 				1DAAAEB91BF36130007475C4 /* SNFViewcontroller.m in Sources */,
 				1D76B16A1BEAFE2E0054DDC9 /* main.m in Sources */,
 				1DCEAFEF1BF31800002804B1 /* WTALeftViewController.m in Sources */,
