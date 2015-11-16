@@ -184,27 +184,18 @@ NSString * const APPURLSessionDownloadTaskDidFailToMoveFileNotification = @"APPU
             else
             {
                 NSLog(@"sucess: %@", md5);
-                
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    
                     [ws removeTask:md5];
                     [ws startDownload];
-                    
                 });
-
-                
             }
-            
         }
-        
-
     }];
     
     [_downloadManager setSessionDidBecomeInvalidBlock:^(NSURLSession * _Nonnull session, NSError * _Nonnull error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [ws invalidSession];
             NSLog(@"DidBecomeInvalidBlock");
-            
         });
     }];
     
